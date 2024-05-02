@@ -26,7 +26,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
     private FachadaViandas fachadaViandas;
     private FachadaHeladeras fachadaHeladeras;
 
-    public Fachada() {
+    private Fachada() {
         this.rutaRepository = new RutaRepository();
         this.rutaMapper = new RutaMapper();
         this.trasladoMapper = new TrasladoMapper();
@@ -63,7 +63,6 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         return rutaMapper.map(ruta);
     }
 
-
     @Override
     public TrasladoDTO buscarXId(Long aLong) throws NoSuchElementException {
         //como lo tengo que buscar, significa que existe entonces lo busco en el repository
@@ -84,7 +83,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
 
         Collections.shuffle(rutasPosibles);
         if (rutasPosibles.isEmpty()) {
-            throw new TrasladoNoAsignableException("no se puede asignar traslado porque no hay una ruta");
+            throw new TrasladoNoAsignableException();
         }
 
             Ruta ruta = rutasPosibles.get(0);
@@ -162,9 +161,5 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         traslado.setEstado(EstadoTrasladoEnum.ENTREGADO);
 
 
-    }
-
-    public List<Ruta> obtenerTodasLasRutas() {
-       return this.rutaRepository.getRutas().stream().toList();
     }
 }
