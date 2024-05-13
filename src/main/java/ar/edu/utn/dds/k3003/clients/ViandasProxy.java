@@ -5,14 +5,11 @@ import ar.edu.utn.dds.k3003.facades.FachadaViandas;
 import ar.edu.utn.dds.k3003.facades.dtos.EstadoViandaEnum;
 import ar.edu.utn.dds.k3003.facades.dtos.ViandaDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import io.javalin.http.Context;
 import io.javalin.http.HttpStatus;
 
 import java.io.IOException;
 import java.util.*;
 import lombok.SneakyThrows;
-import org.jetbrains.annotations.NotNull;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -22,7 +19,6 @@ public class ViandasProxy implements FachadaViandas {
 
     private final String endpoint;
     private final ViandasRetrofitClient service;
-    private static ViandasProxy instancia = null;
 
     public ViandasProxy(ObjectMapper objectMapper) {
 
@@ -39,23 +35,43 @@ public class ViandasProxy implements FachadaViandas {
     }
 
     @Override
-
     public ViandaDTO agregar(ViandaDTO viandaDTO) {
 
-        return null;
+        Call<ViandaDTO> requestCreacionVianda = service.agregarVianda(viandaDTO);
+
+        try {
+            Response<ViandaDTO> response = requestCreacionVianda.execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else {
+                throw new NoSuchElementException("no se pudo crear la vianda");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public ViandaDTO modificarEstado(String s, EstadoViandaEnum estadoViandaEnum){
-       ViandaDTO viandaDto = this.buscarXQR(s);
-       viandaDto.setEstado(estadoViandaEnum);
+    public ViandaDTO modificarEstado(String s, EstadoViandaEnum estadoViandaEnum)
+            throws NoSuchElementException {
+        try {
+            Response<ViandaDTO> response = service.modificarEstadoVianda(s,estadoViandaEnum).execute();
+            if (response.isSuccessful()) {
+                return response.body();
+            } else if (response.code() == HttpStatus.NOT_FOUND.getCode()) {
+                throw new NoSuchElementException("No se encontró la vianda con el código QR: " + s);
+            }else {
+                throw new NoSuchElementException("no se pudo modificar el estado de la vianda");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-       return viandaDto;
     }
 
     @Override
     public List<ViandaDTO> viandasDeColaborador(Long aLong, Integer integer, Integer integer1)
-            //busca todas las viandas del colaborador
             throws NoSuchElementException {
         try {
             Response<List<ViandaDTO>> response = service.buscarViandasColaborador(aLong, integer, integer1).execute();
@@ -82,8 +98,6 @@ public class ViandasProxy implements FachadaViandas {
             throw new NoSuchElementException("no se encontro la vianda " + qr);
         }
         throw new RuntimeException("Error conectandose con el componente viandas");
-
-        //aca deberia guardarme la vianda que busco?
     }
 
     @Override

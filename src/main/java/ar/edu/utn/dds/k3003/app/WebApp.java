@@ -17,11 +17,8 @@ public class WebApp {
     public static void main(String[] args) {
 
         var env = System.getenv();
-        var URL_VIANDAS = env.get("URL_VIANDAS");
-
         var objectMapper = createObjectMapper();
         var fachada = new Fachada();
-
         fachada.setViandasProxy(new ar.edu.utn.dds.k3003.clients.ViandasProxy(objectMapper));
 
         var port = Integer.parseInt(env.getOrDefault("PORT", "8080"));
@@ -40,16 +37,12 @@ public class WebApp {
 
     public static ObjectMapper createObjectMapper() {
         var objectMapper = new ObjectMapper();
-        configureObjectMapper(objectMapper);
-        return objectMapper;
-    }
-
-    public static void configureObjectMapper(ObjectMapper objectMapper) {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         var sdf = new SimpleDateFormat(Constants.DEFAULT_SERIALIZATION_FORMAT, Locale.getDefault());
         sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
         objectMapper.setDateFormat(sdf);
+        return objectMapper;
     }
 }
