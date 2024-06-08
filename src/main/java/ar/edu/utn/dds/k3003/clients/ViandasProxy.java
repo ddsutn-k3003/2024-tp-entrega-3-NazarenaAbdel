@@ -82,6 +82,8 @@ public class ViandasProxy implements FachadaViandas {
             throw new NoSuchElementException("no se encontro la vianda " + qr);
         }
         throw new RuntimeException("Error conectandose con el componente viandas");
+
+        //aca deberia guardarme la vianda que busco?
     }
 
     @Override
