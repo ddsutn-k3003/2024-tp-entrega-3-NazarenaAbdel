@@ -32,5 +32,5 @@ public class TrasladoRepository {
     public List<Traslado> findAll() {
         return this.traslados.stream().collect(Collectors.toList());
     }
-
+//
 }

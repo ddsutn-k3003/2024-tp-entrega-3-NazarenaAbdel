@@ -9,7 +9,7 @@ import retrofit2.http.*;
 import java.util.List;
 
 public interface ViandasRetrofitClient {
-
+//
     @GET("viandas/{qr}")
     Call<ViandaDTO> get(@Path("qr") String qr);
 

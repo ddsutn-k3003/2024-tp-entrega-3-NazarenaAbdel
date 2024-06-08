@@ -19,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
 public class ViandasProxy implements FachadaViandas {
-
+//
     private final String endpoint;
     private final ViandasRetrofitClient service;
     private static ViandasProxy instancia = null;

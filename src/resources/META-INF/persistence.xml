@@ -30,7 +30,7 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2">
              -->
 
 
-            <!-- Mostrar las sentencias de SQL por consola -->
+            <!-- Mostrar las sentencias de SQL por consola // -->
             <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.use_sql_comments" value="true" />

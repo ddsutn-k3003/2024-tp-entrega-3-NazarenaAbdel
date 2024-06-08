@@ -25,4 +25,5 @@ public class SomeDomainModelTest {
     assertEquals("ab", result.getAnAttribute());
     assertEquals(3L, result.getOtherAttribute());
   }
+  //
 }

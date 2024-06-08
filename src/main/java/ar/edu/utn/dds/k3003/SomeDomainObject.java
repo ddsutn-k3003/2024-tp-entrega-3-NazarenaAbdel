@@ -18,4 +18,5 @@ public class SomeDomainObject {
     return new SomeDomainObject(
         anAttribute + other.getAnAttribute(), otherAttribute + other.getOtherAttribute());
   }
+  //
 }

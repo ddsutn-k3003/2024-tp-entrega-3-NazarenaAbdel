@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
 
-
+//
     private final RutaRepository rutaRepository;
     private final RutaMapper rutaMapper;
     private final TrasladoRepository trasladoRepository;
