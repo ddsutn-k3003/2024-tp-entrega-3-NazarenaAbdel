@@ -22,7 +22,7 @@ public class testPersistencia {
 
     @BeforeAll
     public static void setUpClass() throws Exception {
-        entityManagerFactory = Persistence.createEntityManagerFactory("entrega3-dds");
+        entityManagerFactory = Persistence.createEntityManagerFactory("postgres");
     }
     @BeforeEach
     public void setup() throws Exception {
@@ -36,7 +36,7 @@ public class testPersistencia {
 
     @Test
     public void testGuardarYRecuperarDoc() throws Exception {
-        Ruta ruta = new Ruta(14L, 0, 1);
+        Ruta ruta = new Ruta(15L, 0, 1);
         Traslado traslado = new Traslado("er4567jhngk",ruta, EstadoTrasladoEnum.CREADO, LocalDateTime.now());
 
         entityManager.getTransaction().begin();
