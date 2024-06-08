@@ -11,6 +11,9 @@ import ar.edu.utn.dds.k3003.repositories.RutaRepository;
 import ar.edu.utn.dds.k3003.repositories.TrasladoMapper;
 import ar.edu.utn.dds.k3003.repositories.TrasladoRepository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -26,11 +29,16 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
     private FachadaViandas fachadaViandas;
     private FachadaHeladeras fachadaHeladeras;
 
+    private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
+
     public Fachada() {
-        this.rutaRepository = new RutaRepository();
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("postgres");
+        this.entityManager = entityManagerFactory.createEntityManager();
+        this.rutaRepository = new RutaRepository(entityManager);
         this.rutaMapper = new RutaMapper();
         this.trasladoMapper = new TrasladoMapper();
-        this.trasladoRepository = new TrasladoRepository();
+        this.trasladoRepository = new TrasladoRepository(entityManager);
     }
 
 
