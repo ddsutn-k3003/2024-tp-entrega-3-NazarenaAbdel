@@ -1,0 +1,19 @@
+EJ de rutas y traslados
+
+ruta:
+{
+    "id": 0,
+    "colaboradorId": 0,
+    "heladeraIdOrigen": 1,
+    "heladeraIdDestino": 2
+}
+
+
+traslado
+{
+    "qrVianda": "abcd",
+    "status": "CREADO",
+    "fechaTraslado": "2024-05-15T21:10:40Z",
+    "heladeraOrigen": 1,
+    "heladeraDestino": 2
+}
