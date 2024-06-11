@@ -53,6 +53,8 @@ public class testPersistencia {
         assertEquals(ruta.getId(), rutaPersistida.getId());
         assertEquals(traslado.getId(), trasladoPersistido.getId());
     }
-    //
+
+
+
 
 }

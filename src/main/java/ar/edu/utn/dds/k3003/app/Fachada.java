@@ -86,23 +86,29 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
     public TrasladoDTO asignarTraslado(TrasladoDTO trasladoDTO) throws TrasladoNoAsignableException {
 
         ViandaDTO viandaDTO = fachadaViandas.buscarXQR(trasladoDTO.getQrVianda());
-
-        List<Ruta> rutasPosibles = this.rutaRepository.findByHeladeras(trasladoDTO.getHeladeraOrigen(),
-                trasladoDTO.getHeladeraDestino());
-
-        Collections.shuffle(rutasPosibles);
-        if (rutasPosibles.isEmpty()) {
-            throw new TrasladoNoAsignableException("no se puede asignar traslado porque no hay una ruta");
+        if (viandaDTO == null) {
+            throw new TrasladoNoAsignableException("No se encontró la vianda con el QR proporcionado");
         }
 
-            Ruta ruta = rutasPosibles.get(0);
-            Traslado traslado = trasladoRepository.save(new Traslado(viandaDTO.getCodigoQR(), ruta,
-                    EstadoTrasladoEnum.ASIGNADO, trasladoDTO.getFechaTraslado()));
+
+        List<Ruta> rutasPosibles = this.rutaRepository.findByHeladeras(trasladoDTO.getHeladeraOrigen(), trasladoDTO.getHeladeraDestino());
+        if (rutasPosibles == null || rutasPosibles.isEmpty()) {
+            throw new TrasladoNoAsignableException("No se puede asignar traslado porque no hay una ruta");
+        }
+
+
+
+
+        Collections.shuffle(rutasPosibles);
+
+        Ruta ruta = rutasPosibles.get(0);
+        Traslado traslado = trasladoRepository.save(new Traslado(viandaDTO.getCodigoQR(), ruta,
+                EstadoTrasladoEnum.ASIGNADO, trasladoDTO.getFechaTraslado()));
 
 
         return this.trasladoMapper.map(traslado);
-
     }
+
 
     @Override
     public List<TrasladoDTO> trasladosDeColaborador(Long aLong, Integer integer, Integer integer1) {
@@ -149,7 +155,10 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         // y genero un nuevo traslado
         Ruta ruta = new Ruta(trasladoDto.getColaboradorId(),trasladoDto.getHeladeraOrigen(),trasladoDto.getHeladeraDestino());
         Traslado traslado = new Traslado(trasladoDto.getQrVianda(), ruta, EstadoTrasladoEnum.EN_VIAJE, trasladoDto.getFechaTraslado());
+
+        rutaRepository.save(ruta);
         trasladoRepository.save(traslado);
+
 
     }
 
@@ -169,6 +178,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         Traslado traslado = trasladoRepository.findById(aLong);
         traslado.setEstado(EstadoTrasladoEnum.ENTREGADO);
 
+        trasladoRepository.save(traslado);
 
     }
 

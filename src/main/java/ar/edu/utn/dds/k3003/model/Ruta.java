@@ -22,7 +22,7 @@ public class Ruta {
     @Column(name = "heladera_Id_Destino")
     private Integer heladeraIdDestino;
 
-    @Transient
+    @OneToMany(mappedBy = "ruta")
     private List<Traslado> traslados;
 
     public Ruta(Long colaboradorId, Integer heladeraIdOrigen, Integer heladeraIdDestino){
