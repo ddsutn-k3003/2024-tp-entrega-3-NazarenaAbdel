@@ -33,7 +33,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
     private EntityManager entityManager;
 
     public Fachada() {
-        this.entityManagerFactory = Persistence.createEntityManagerFactory("postgres");
+        this.entityManagerFactory = Persistence.createEntityManagerFactory("entrega3_tp_dds");
         this.entityManager = entityManagerFactory.createEntityManager();
         this.rutaRepository = new RutaRepository(entityManager);
         this.rutaMapper = new RutaMapper();
