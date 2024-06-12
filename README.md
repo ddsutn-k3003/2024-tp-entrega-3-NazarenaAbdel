@@ -3,4 +3,5 @@
 
 Template para TP DDS 2024 - Entrega 1
 
-deploy: https://dashboard.render.com/web/srv-cp8enfol6cac73c3o6cg/deploys/dep-cp8f4uv109ks739mg7sg?r=2024-05-24%4020%3A02%3A08%7E2024-05-24%4020%3A11%3A11
+deploy entrega 3: https://dashboard.render.com/web/srv-cpl01ded3nmc73dcqkvg
+deploy base de datos: https://dashboard.render.com/d/dpg-cpkvhbq0si5c73d322t0-a/logs
