@@ -115,10 +115,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         //ahora cambio el estado de la vianda
         fachadaViandas.modificarEstado(trasladoDto.getQrVianda(), EstadoViandaEnum.EN_TRASLADO);
         this.trasladoRepository.modificarEstado(aLong,EstadoTrasladoEnum.EN_VIAJE);
-
-
     }
-
     @Override
     public void trasladoDepositado(Long aLong) {
         //es un traslado que ya fue creado en trasladoRetirado y ahora lo tengo que buscar

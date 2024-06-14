@@ -55,7 +55,9 @@ public class TrasladoController {
         var idTraslado = context.pathParamAsClass("id", Long.class).get();
 
         try {
-            String nuevoEstado = context.bodyAsClass(EstadoTrasladoEnum.class).toString();
+            TrasladoDTO trasladoDTO = context.bodyAsClass(TrasladoDTO.class);
+            trasladoDTO.setId(idTraslado);
+            String nuevoEstado = trasladoDTO.getStatus().toString();
 
             if (nuevoEstado == "ENTREGADO") {
                 this.fachada.trasladoDepositado(idTraslado);
