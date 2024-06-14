@@ -144,7 +144,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         //primero busco el id del traslado
         TrasladoDTO trasladoDto = buscarXId(aLong);
 
-        //genero el retiroDto - el numero de la tarjeta hay que inventarlo por el momento
+        //genero el retiroDto
         RetiroDTO retiroHeladera = new RetiroDTO(trasladoDto.getQrVianda(), "123", trasladoDto.getHeladeraOrigen());
 
         fachadaHeladeras.retirar(retiroHeladera);
