@@ -22,7 +22,7 @@ public class testPersistencia {
 
     @BeforeAll
     public static void setUpClass() throws Exception {
-        entityManagerFactory = Persistence.createEntityManagerFactory("postgres");
+        entityManagerFactory = Persistence.createEntityManagerFactory("entrega3_tp_dds");
     }
     @BeforeEach
     public void setup() throws Exception {

@@ -35,6 +35,7 @@ public class WebApp {
         app.get("/rutas", rutaController::obtenerTodas);
         app.post("/traslados", trasladosController::asignar);
         app.get("/traslados/{id}", trasladosController::obtener);
+        app.get( "/traslados/search/findByColaboradorId", trasladosController::ObtenerTrasladosColaborador);
         app.patch("/traslados/{id}", trasladosController::modificarEstado);
     }
 

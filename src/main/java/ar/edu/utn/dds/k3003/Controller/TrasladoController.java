@@ -37,6 +37,20 @@ public class TrasladoController {
         }
     }
 
+    public void ObtenerTrasladosColaborador(Context context){
+        var id = context.queryParamAsClass("id", Long.class).get();
+        var anio = context.queryParamAsClass("anio", Integer.class).get();
+        var mes = context.queryParamAsClass("mes", Integer.class).get();
+        try {
+            var trasladoDTO = this.fachada.trasladosDeColaborador(id,mes,anio);
+            context.json(trasladoDTO);
+        } catch (NoSuchElementException ex) {
+            context.result(ex.getLocalizedMessage());
+            context.status(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     public void modificarEstado(Context context) {
         var idTraslado = context.pathParamAsClass("id", Long.class).get();
 
