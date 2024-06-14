@@ -39,6 +39,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
         this.rutaMapper = new RutaMapper();
         this.trasladoMapper = new TrasladoMapper();
         this.trasladoRepository = new TrasladoRepository(entityManager);
+
     }
 
     @Override

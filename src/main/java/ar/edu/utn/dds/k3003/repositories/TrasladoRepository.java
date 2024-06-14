@@ -67,7 +67,6 @@ public class TrasladoRepository {
         entityManager.getTransaction().begin();
         Traslado traslado = findById(id);
         traslado.setEstado(estadoNuevo);
-        entityManager.persist(traslado);
         entityManager.getTransaction().commit();
 
         return traslado;
