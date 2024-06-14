@@ -1,9 +1,11 @@
 package ar.edu.utn.dds.k3003.repositories;
 
+import ar.edu.utn.dds.k3003.facades.dtos.EstadoTrasladoEnum;
 import ar.edu.utn.dds.k3003.model.Ruta;
 import ar.edu.utn.dds.k3003.model.Traslado;
 
 import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -20,13 +22,6 @@ public class TrasladoRepository {
     }
 
     public Traslado save(Traslado traslado) {
-       /* if (Objects.isNull(traslado.getId())) {
-            traslado.setId(seqId.getAndIncrement());
-            this.traslados.add(traslado);
-        }
-        return traslado;
-
-        */
         if (Objects.isNull(traslado.getId())) {
             entityManager.getTransaction().begin();
             entityManager.persist(traslado);
@@ -36,12 +31,6 @@ public class TrasladoRepository {
     }
 
     public Traslado findById(Long id) {
-       /* Optional<Traslado> first = this.traslados.stream().filter(x -> x.getId().equals(id)).findFirst();
-        return first.orElseThrow(() -> new NoSuchElementException(
-                String.format("No hay un traslado de id: %s", id)
-        ));
-
-        */
 
         Traslado traslado = entityManager.find(Traslado.class, id);
         if (traslado == null) {
@@ -49,6 +38,28 @@ public class TrasladoRepository {
         }
         return traslado;
     }
+
+    public List<Traslado> findByColaboradorId(Long id, Integer mes, Integer anio) {
+
+        List<Traslado> trasladosDelColaborador = this.traslados.stream()
+                .filter(t -> t.getRuta().getColaboradorId().equals(id))
+                .filter(x -> x.getFechaTraslado().getMonthValue() == mes)
+                .filter(x -> x.getFechaTraslado().getYear() == anio)
+                .collect(Collectors.toList());
+
+
+        return trasladosDelColaborador;
+    }
+
+    public Traslado modificarEstado(Long id, EstadoTrasladoEnum estadoNuevo) {
+
+        Traslado traslado = findById(id);
+        traslado.setEstado(estadoNuevo);
+
+        return traslado;
+    }
+
+
 
     public List<Traslado> findAll() {
         return this.traslados.stream().collect(Collectors.toList());
