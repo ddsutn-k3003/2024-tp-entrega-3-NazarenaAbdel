@@ -25,13 +25,6 @@ public class RutaRepository {
     }
 
     public Ruta save(Ruta ruta) {
-       /* if (Objects.isNull(ruta.getId())) {
-            ruta.setId(seqId.getAndIncrement());
-            this.rutas.add(ruta);
-        }
-        return ruta;
-
-        */
 
         if (Objects.isNull(ruta.getId())) {
             entityManager.getTransaction().begin();
@@ -42,12 +35,6 @@ public class RutaRepository {
     }
 
     public Ruta findById(Long id) {
-       /* Optional<Ruta> first = this.rutas.stream().filter(x -> x.getId().equals(id)).findFirst();
-        return first.orElseThrow(() -> new NoSuchElementException(
-                String.format("No hay una ruta de id: %s", id)
-        ));
-
-        */
 
         Ruta ruta = entityManager.find(Ruta.class, id);
         if (ruta == null) {
@@ -57,12 +44,6 @@ public class RutaRepository {
     }
 
     public List<Ruta> findByHeladeras(Integer heladeraOrigen, Integer heladeraDestino) {
-        /*//busca las rutas que tienen esas heladeras de origen y de destino
-        return this.rutas.stream().filter(x -> x.getHeladeraIdOrigen().equals(heladeraOrigen) &&
-                x.getHeladeraIdDestino().equals(heladeraDestino)
-        ).toList();
-
-         */
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Ruta> criteriaQuery = criteriaBuilder.createQuery(Ruta.class);
@@ -74,5 +55,5 @@ public class RutaRepository {
                 );
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
-//
+
 }

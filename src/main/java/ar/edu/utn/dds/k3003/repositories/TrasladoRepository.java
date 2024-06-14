@@ -6,6 +6,8 @@ import ar.edu.utn.dds.k3003.model.Traslado;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -40,29 +42,35 @@ public class TrasladoRepository {
     }
 
     public List<Traslado> findByColaboradorId(Long id, Integer mes, Integer anio) {
-
+/*
         List<Traslado> trasladosDelColaborador = this.traslados.stream()
                 .filter(t -> t.getRuta().getColaboradorId().equals(id))
                 .filter(x -> x.getFechaTraslado().getMonthValue() == mes)
                 .filter(x -> x.getFechaTraslado().getYear() == anio)
                 .collect(Collectors.toList());
 
+ */
 
-        return trasladosDelColaborador;
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Traslado> criteriaQuery = criteriaBuilder.createQuery(Traslado.class);
+        Root<Traslado> root = criteriaQuery.from(Traslado.class);
+        criteriaQuery.select(root)
+                .where(
+                        criteriaBuilder.equal(root.get("ruta").get("colaboradorId"), id),
+                        criteriaBuilder.equal(criteriaBuilder.function("EXTRACT", Integer.class, criteriaBuilder.literal("MONTH"), root.get("fechaTraslado")), mes),
+                        criteriaBuilder.equal(criteriaBuilder.function("EXTRACT", Integer.class, criteriaBuilder.literal("YEAR"), root.get("fechaTraslado")), anio)
+                );
+        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
     public Traslado modificarEstado(Long id, EstadoTrasladoEnum estadoNuevo) {
-
+        entityManager.getTransaction().begin();
         Traslado traslado = findById(id);
         traslado.setEstado(estadoNuevo);
+        entityManager.persist(traslado);
+        entityManager.getTransaction().commit();
 
         return traslado;
     }
 
-
-
-    public List<Traslado> findAll() {
-        return this.traslados.stream().collect(Collectors.toList());
-    }
-//
 }
