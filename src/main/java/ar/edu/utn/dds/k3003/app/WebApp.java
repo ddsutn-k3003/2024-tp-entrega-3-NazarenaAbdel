@@ -23,6 +23,7 @@ public class WebApp {
         var fachada = new Fachada();
 
         fachada.setViandasProxy(new ar.edu.utn.dds.k3003.clients.ViandasProxy(objectMapper));
+        fachada.setHeladerasProxy(new ar.edu.utn.dds.k3003.clients.HeladerasProxy(objectMapper));
 
         var port = Integer.parseInt(env.getOrDefault("PORT", "8080"));
 
