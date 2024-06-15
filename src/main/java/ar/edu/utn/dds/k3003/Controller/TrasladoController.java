@@ -52,8 +52,8 @@ public class TrasladoController {
     }
 
     public void modificarEstado(Context context) {
-      //  var idTraslado = context.pathParamAsClass("id", Long.class).get();
-        var idTraslado = context.queryParamAsClass("id", Long.class).get();
+        var idTraslado = context.pathParamAsClass("id", Long.class).get();
+       // var idTraslado = context.queryParamAsClass("id", Long.class).get();
 
         try {
             TrasladoDTO trasladoDTO = context.bodyAsClass(TrasladoDTO.class);
