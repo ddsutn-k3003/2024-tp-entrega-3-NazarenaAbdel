@@ -20,7 +20,7 @@ public interface ViandasRetrofitClient {
     Call<Boolean> viandaVencida(@Path("qr") String qr);
 
     @PATCH("viandas/{qrVianda}")
-    Call<ViandaDTO> modificarHeladeraVianda(@Path("qrVianda") String qrVianda, @Path("heladeraId") Integer idHeladera); //verlo con viandas
+    Call<ViandaDTO> modificarHeladeraVianda(@Path("qrVianda") String qrVianda, @Path("idHeladera") Integer idHeladera); //verlo con viandas
 }
 
 
