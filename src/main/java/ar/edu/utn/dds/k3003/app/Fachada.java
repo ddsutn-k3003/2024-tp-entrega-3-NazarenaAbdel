@@ -10,6 +10,8 @@ import ar.edu.utn.dds.k3003.repositories.RutaMapper;
 import ar.edu.utn.dds.k3003.repositories.RutaRepository;
 import ar.edu.utn.dds.k3003.repositories.TrasladoMapper;
 import ar.edu.utn.dds.k3003.repositories.TrasladoRepository;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -19,6 +21,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+@Getter
+@Setter
 public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
 
 //
@@ -51,8 +55,7 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
 
 
     @Override
-    public TrasladoDTO buscarXId(Long aLong) throws NoSuchElementException {
-        //como lo tengo que buscar, significa que existe entonces lo busco en el repository
+    public TrasladoDTO buscarXId(Long aLong) throws NoSuchElementException { //el traslado
         Traslado traslado = trasladoRepository.findById(aLong);
 
         TrasladoDTO trasDto = trasladoMapper.map(traslado);
@@ -87,8 +90,14 @@ public class Fachada implements ar.edu.utn.dds.k3003.facades.FachadaLogistica{
     @Override
     public List<TrasladoDTO> trasladosDeColaborador(Long aLong, Integer integer, Integer integer1) {
         List<Traslado> trasladosDeColaborador = this.trasladoRepository.findByColaboradorId(aLong,integer,integer);
+        List<Traslado> trasladosPorMesYAnio = trasladosDeColaborador.stream()
+                .filter(t -> t.getRuta().getColaboradorId().equals(aLong))
+                .filter(x -> x.getFechaTraslado().getMonthValue() == integer)
+                .filter(x -> x.getFechaTraslado().getYear() == integer1)
+                .collect(Collectors.toList());
 
-         List<TrasladoDTO> trasDtos = trasladosDeColaborador.stream().map(t -> trasladoMapper.map(t)).collect(Collectors.toList());
+
+         List<TrasladoDTO> trasDtos = trasladosPorMesYAnio.stream().map(t -> trasladoMapper.map(t)).collect(Collectors.toList());
 
         return trasDtos;
     }

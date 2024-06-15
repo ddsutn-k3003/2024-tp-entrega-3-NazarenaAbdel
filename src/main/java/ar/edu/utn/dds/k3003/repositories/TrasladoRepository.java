@@ -7,6 +7,7 @@ import ar.edu.utn.dds.k3003.model.Traslado;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -56,10 +57,10 @@ public class TrasladoRepository {
         Root<Traslado> root = criteriaQuery.from(Traslado.class);
         criteriaQuery.select(root)
                 .where(
-                        criteriaBuilder.equal(root.get("ruta").get("colaboradorId"), id),
-                        criteriaBuilder.equal(criteriaBuilder.function("EXTRACT", Integer.class, criteriaBuilder.literal("MONTH"), root.get("fechaTraslado")), mes),
-                        criteriaBuilder.equal(criteriaBuilder.function("EXTRACT", Integer.class, criteriaBuilder.literal("YEAR"), root.get("fechaTraslado")), anio)
+                        criteriaBuilder.equal(root.get("ruta").get("colaboradorId"), id)
                 );
+
+
         return entityManager.createQuery(criteriaQuery).getResultList();
     }
 
