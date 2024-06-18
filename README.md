@@ -24,8 +24,6 @@ Example Value:
 
 {
    
-    "id": 0,
-   
     "colaboradorId": 1,
     
     "heladeraIdOrigen": 0,
